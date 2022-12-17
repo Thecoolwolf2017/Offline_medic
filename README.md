@@ -1,9 +1,9 @@
-# hh_aidoc
-AI Doctor
-
+# Offline_medic
+by: AI Doctor
+edited by: Lozenda
 # Description :
 
-This script is basically for to be used in the server when there are no ems /doctors available in the server the players will get an option to pay and get helped/revived on there spot present by a moving ambulance with a doctor!
+This script is used to spawn a ems in the server when there are no ems /doctors available. the players will get chared and get helped/revived on there spot present by a moving ambulance with a doctor!
 
 # Features :
 
