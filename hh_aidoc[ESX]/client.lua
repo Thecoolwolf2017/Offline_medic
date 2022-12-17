@@ -28,38 +28,38 @@ end
 
 
 
-RegisterCommand("help", function(source, args, raw)
+RegisterCommand(Config.command, function(source, args, raw)
 	if isDead and spam then
 		ESX.TriggerServerCallback('hhfw:docOnline', function(EMSOnline, hasEnoughMoney)
 			if EMSOnline <= Config.Doctor and hasEnoughMoney and spam then
 				SpawnVehicle(GetEntityCoords(PlayerPedId()))
 				TriggerServerEvent('hhfw:charge')
-				Notify("Medic is arriving")
+				Notify(Config.MedicArriving)
 			else
 				if EMSOnline > Config.Doctor then
-					Notify("There is too many medics online", "error")
+						notify(Config.Doctormessage)
 				elseif not hasEnoughMoney then
-					Notify("Not Enough Money")
+					Notify(Config.NEM)
 				else
-					Notify("the Paramadic is on thair Way")
+					Notify(Config.MedicArriving)
 				end	
 			end
 		end)
 	else
-		Notify("This can only be used when dead")
+		Notify(Config.ND)
 	end
 end)
 
 function SpawnVehicle(x, y, z)  
 	spam = false
-	local vehhash = GetHashKey("ambulance")                                                     
+	local vehhash = GetHashKey(Config.carmodal)                                                     
 	local loc = GetEntityCoords(PlayerPedId())
 	RequestModel(vehhash)
 	while not HasModelLoaded(vehhash) do
 		Wait(1)
 	end
-	RequestModel('s_m_m_doctor_01')
-	while not HasModelLoaded('s_m_m_doctor_01') do
+	RequestModel(Config.doctormodal)
+	while not HasModelLoaded(Config.doctormodal) do
 		Wait(1)
 	end
 	local spawnRadius = 40                                                    
@@ -69,11 +69,12 @@ function SpawnVehicle(x, y, z)
         mechVeh = CreateVehicle(vehhash, spawnPos, spawnHeading, true, false)                        
         ClearAreaOfVehicles(GetEntityCoords(mechVeh), 5000, false, false, false, false, false);  
         SetVehicleOnGroundProperly(mechVeh)
-		SetVehicleNumberPlateText(mechVeh, "HHFW")
+		SetVehicleNumberPlateText(mechVeh, Config.plate)
 		SetEntityAsMissionEntity(mechVeh, true, true)
 		SetVehicleEngineOn(mechVeh, true, true, false)
+		SetVehicleSiren(vehhash, Config.Siren)
         
-        mechPed = CreatePedInsideVehicle(mechVeh, 26, GetHashKey('s_m_m_doctor_01'), -1, true, false)              	
+        mechPed = CreatePedInsideVehicle(mechVeh, 26, GetHashKey(Config.doctormodal), -1, true, false)              	
         
         mechBlip = AddBlipForEntity(mechVeh)                                                        	
         SetBlipFlashes(mechBlip, true)  
@@ -129,14 +130,14 @@ function DoctorNPC()
 	TriggerEvent("mythic_progbar:client:progress", {
         name = "ai_doc",
         duration = Config.ReviveTime,
-        label = "The doctor is giving you medical aid",
+        label = Config.doctaid,
         useWhileDead = true,
         canCancel = false,
         controlDisables = {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
+            disableMovement = Config.disableMovement,
+            disableCarMovement = Config.disableCarMovement,
+            disableMouse = Config.disableMouse,
+            disableCombat = Config.disableCombat,
         },
         animation = {},
         prop = {}
@@ -146,7 +147,7 @@ function DoctorNPC()
 	Citizen.Wait(500)
 	TriggerEvent('esx_ambulancejob:revive')
 	StopScreenEffect('DeathFailOut')	
-	Notify("Your treatment is done, you were charged: "..Config.Price)
+	Notify(Config.TreatmentDone..Config.Price)
 	RemovePedElegantly(test1)
 	DeleteEntity(test)
 	spam = true

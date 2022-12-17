@@ -10,14 +10,14 @@ ESX.RegisterServerCallback('hhfw:docOnline' , function(source, cb)
 	if Ply.getMoney() >= Config.Price then
 		canpay = true
 	else
-		if Ply.getAccount('bank').money >= Config.Price then
+		if Ply.getAccount(Config.MoneyAccount).money >= Config.Price then
 			canpay = true
 		end
 	end
 
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-		if xPlayer.job.name == 'ambulance' then
+		if xPlayer.job.name == Config.JobName then
 			doctor = doctor + 1
 		end
 	end
@@ -34,6 +34,6 @@ AddEventHandler('hhfw:charge', function()
 	if xPlayer.getMoney()>= Config.Price then
 		xPlayer.removeMoney(Config.Price)
 	else
-		xPlayer.removeAccountMoney('bank', Config.Price)
+		xPlayer.removeAccountMoney(Config.MoneyAccount, Config.Price)
 	end
 end)
