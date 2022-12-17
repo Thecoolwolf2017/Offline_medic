@@ -72,7 +72,7 @@ function SpawnVehicle(x, y, z)
 		SetVehicleNumberPlateText(mechVeh, Config.plate)
 		SetEntityAsMissionEntity(mechVeh, true, true)
 		SetVehicleEngineOn(mechVeh, true, true, false)
-		SetVehicleSiren(vehhash, Config.Siren)
+		SetVehicleSiren(mechVeh, Config.Siren)
         
         mechPed = CreatePedInsideVehicle(mechVeh, 26, GetHashKey(Config.doctormodal), -1, true, false)              	
         
