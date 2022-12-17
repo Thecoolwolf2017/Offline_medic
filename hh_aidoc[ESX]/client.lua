@@ -11,7 +11,6 @@ local Active = false
 local test = nil
 local test1 = nil
 local spam = true
-
 local isDead = false
 
 
@@ -21,14 +20,17 @@ end)
 
 AddEventHandler('esx:onPlayerDeath', function(data)
 	isDead = true
-end)	
+end)
+
+if IsPedDeadOrDying(PlayerPedId()) then
+	isDead = true
+end
 
 
 
 RegisterCommand("help", function(source, args, raw)
 	if isDead and spam then
 		ESX.TriggerServerCallback('hhfw:docOnline', function(EMSOnline, hasEnoughMoney)
-
 			if EMSOnline <= Config.Doctor and hasEnoughMoney and spam then
 				SpawnVehicle(GetEntityCoords(PlayerPedId()))
 				TriggerServerEvent('hhfw:charge')
@@ -39,7 +41,7 @@ RegisterCommand("help", function(source, args, raw)
 				elseif not hasEnoughMoney then
 					Notify("Not Enough Money")
 				else
-					Notify("Wait Paramadic is on its Way")
+					Notify("the Paramadic is on thair Way")
 				end	
 			end
 		end)
@@ -47,8 +49,6 @@ RegisterCommand("help", function(source, args, raw)
 		Notify("This can only be used when dead")
 	end
 end)
-
-
 
 function SpawnVehicle(x, y, z)  
 	spam = false
@@ -102,10 +102,16 @@ Citizen.CreateThread(function()
 				if Active then
 					TaskGoToCoordAnyMeans(test1, loc.x, loc.y, loc.z, 1.0, 0, 0, 786603, 0xbf800000)
 				end
-				if dist1 <= 1 then 
-					Active = false
+				if dist1 <= 3.5 then
+					if IsPedSittingInAnyVehicle(PlayerPedId(-1)) then
+						Active = false
 					ClearPedTasksImmediately(test1)
 					DoctorNPC()
+					elseif dist1 <= 1 then
+						Active = false
+					ClearPedTasksImmediately(test1)
+					DoctorNPC()
+					end
 				end
             end
         end
