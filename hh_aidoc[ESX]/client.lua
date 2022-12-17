@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
 			local dist1 = Vdist(loc.x, loc.y, loc.z, ld.x, ld.y, ld.z)
             if dist <= 10 then
 				if Active then
-					TaskGoToCoordAnyMeans(test1, loc.x, loc.y, loc.z, 1.0, 0, 0, 786603, 0xbf800000)
+					TaskGoToCoordAnyMeans(test1, loc.x, loc.y, loc.z, 1.0)
 				end
 				if dist1 <= 3.5 then
 					if IsPedSittingInAnyVehicle(PlayerPedId(-1)) then
@@ -146,7 +146,7 @@ function DoctorNPC()
         if not status then
         ClearPedTasks(test1)
 	Citizen.Wait(500)
-	TriggerEvent('esx_ambulancejob:revive')
+	TriggerEvent('esx_ambulancejob:revive', GetPlayerServerId(PlayerId()))
 	StopScreenEffect('DeathFailOut')	
 	Notify(Config.TreatmentDone..Config.Price)
 	RemovePedElegantly(test1)
