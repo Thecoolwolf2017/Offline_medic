@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 
-description 'HHFW AI Doc'
+description 'a medic that works offline'
 
 version '0.1.0'
 
