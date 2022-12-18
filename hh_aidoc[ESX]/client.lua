@@ -31,12 +31,14 @@ end
 RegisterCommand(Config.command, function(source, args, raw)
 	if isDead and spam then
 		ESX.TriggerServerCallback('hhfw:docOnline', function(EMSOnline, hasEnoughMoney)
-			if hasEnoughMoney and spam then
+			if EMSOnline <= Config.Doctor and hasEnoughMoney and spam then
 				SpawnVehicle(GetEntityCoords(PlayerPedId()))
 				TriggerServerEvent('hhfw:charge')
 				Notify(Config.MedicArriving)
 			else
-				if not hasEnoughMoney then
+				if EMSOnline > Config.Doctor then
+						notify(Config.Doctormessage)
+				elseif not hasEnoughMoney then
 					Notify(Config.NEM)
 				else
 					Notify(Config.MedicArriving)

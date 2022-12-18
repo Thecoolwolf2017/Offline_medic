@@ -5,6 +5,8 @@ Config = {}
 
 Config.command = "help" -- the command that will be typed
 Config.MedicArriving = "Medic is arriving" -- the message that will appear with the medic is arriving
+Config.Doctor = 0 -- Minimum Amount of EMS to work
+Config.Doctormessage = "There is too many medics online", "error" -- the message that will show if there are medics online
 Config.NEM = "Not Enough Money" -- the message that will show if the player does not have Enough Money
 Config.Price = 2000 -- the price of the service done
 Config.ReviveTime = 20000  --in msec
