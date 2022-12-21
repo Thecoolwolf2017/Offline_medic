@@ -8,23 +8,25 @@ Citizen.CreateThread(function()
 end)
 
 local Active = false
-local test = nil
-local test1 = nil
 local spam = true
 local isDead = false
+local test = nil
+local test1 = nil
 
-
-AddEventHandler('playerSpawned', function(spawn)
-	isDead = false
+AddEventHandler('esx:onPlayerSpawn', function(data)
+	ClearPedTasksImmediately(test1)
+	RemovePedElegantly(test1)
+	DeleteEntity(test)
+	Active = false
+spam = true
+test = nil
+test1 = nil
+isDead = false
 end)
 
 AddEventHandler('esx:onPlayerDeath', function(data)
 	isDead = true
-end)
-
-if IsPedDeadOrDying(PlayerPedId()) then
-	isDead = true
-end
+	end)
 
 
 
@@ -53,7 +55,7 @@ end)
 function SpawnVehicle(x, y, z)  
 	spam = false
 	local vehhash = GetHashKey(Config.carmodal)                                                     
-	local loc = GetEntityCoords(PlayerPedId())
+	local loc = GetEntityCoords(PlayerPedId(-1))
 	RequestModel(vehhash)
 	while not HasModelLoaded(vehhash) do
 		Wait(1)
@@ -83,7 +85,7 @@ function SpawnVehicle(x, y, z)
 
 		PlaySoundFrontend(-1, "Text_Arrive_Tone", "Phone_SoundSet_Default", 1)
 		Wait(2000)
-		TaskVehicleDriveToCoord(mechPed, mechVeh, loc.x, loc.y, loc.z, 20.0, 0, GetEntityModel(mechVeh), 524863, 2.0)
+		TaskVehicleDriveToCoord(mechPed, mechVeh, loc.x, loc.y, loc.z, 20.0, 0, GetEntityModel(mechVeh), 524863, 1.0)
 		test = mechVeh
 		test1 = mechPed
 		Active = true
